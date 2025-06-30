@@ -3,6 +3,7 @@ library(dplyr)
 library(leaflet)
 library(shiny)
 library(sf)
+library(plotly)
 
 map_ui <- function(id) {
   tagList(
@@ -11,7 +12,7 @@ map_ui <- function(id) {
       label = "Select and issue:",
       choices = unique(mrp_data$issue)
     ),
-    plotOutput(NS(id, "map"))
+    plotlyOutput(NS(id, "map"))
   )
 }
 
@@ -21,16 +22,17 @@ map_server <- function(id) {
     mrp_data <- reactive({
       data <- readRDS("data/cmb25mrp_estimates.RDS")
       data <- data |>
-        filter(issue == input$issue) |>
+        dplyr::filter(issue == input$issue) |>
         mutate(csd = as.character(csd))
       return(data)
     })
-    output$map <- renderPlot({
+    output$map <- renderPlotly({
       geo_data <- geo_data |>
         dplyr::left_join(mrp_data(), by = c("CSDUID" = "csd"))
-      ggplot(geo_data) +
+      p <- ggplot(geo_data) +
         geom_sf(aes(fill = prediction)) +
         theme_void()
+      ggplotly(p)
     })
   })
 }
