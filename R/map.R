@@ -4,12 +4,12 @@ library(leaflet)
 library(shiny)
 library(sf)
 
-map_ui <- function(id) {
+map_ui <- function(id, issues) {
   tagList(
     selectInput(
       NS(id, "issue"),
       label = "Select and issue:",
-      choices = unique(mrp_data$issue)
+      choices = issues
     ),
     plotOutput(NS(id, "map"))
   )
@@ -18,6 +18,7 @@ map_ui <- function(id) {
 map_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     geo_data <- sf::read_sf("data/geo_simple/geo_simple.shp")
+
     mrp_data <- reactive({
       data <- readRDS("data/cmb25mrp_estimates.RDS")
       data <- data |>

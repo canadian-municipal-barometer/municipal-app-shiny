@@ -3,9 +3,11 @@
 
 library(shiny)
 
+issues <- readRDS("data/issues.RDS")
+
 municipal_policy_app <- function() {
   ui <- fluidPage(
-    map_ui("map")
+    map_ui("map", issues)
   )
   server <- function(input, output, session) {
     map_server("map")
