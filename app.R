@@ -45,7 +45,12 @@ municipal_policy_app <- function() {
     ),
   )
   server <- function(input, output, session) {
-    map_server("map", issue = input$issue)
+    map_server(
+      "map",
+      issue = reactive({
+        input$issue
+      })
+    )
   }
   shinyApp(ui, server) # nolint
   # profvis::profvis(runApp(shinyApp(ui, server))) #nolint

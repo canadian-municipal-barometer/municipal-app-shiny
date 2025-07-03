@@ -13,7 +13,7 @@ map_server <- function(id, issue) {
       tags$div(
         style = "flex-grow: 1; display: flex;",
         tags$iframe(
-          src = paste0(issue, ".html"), # relative to www/
+          src = paste0(issue(), ".html"), # relative to www/
           style = "width: 100%; height: 600px;"
         )
       )
