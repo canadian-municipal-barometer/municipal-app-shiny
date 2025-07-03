@@ -2,6 +2,7 @@
 # deployment on Posit Connect Cloud.
 
 library(shiny)
+library(bslib)
 
 issues <- jsonlite::fromJSON("data/statements_en.json")
 
@@ -28,12 +29,23 @@ municipal_policy_app <- function() {
           display: flex;
           justify-content: center;
         ",
-      map_ui("map", issues)[[1]],
+      selectInput(
+        "issue",
+        label = "Select an issue:",
+        choices = issues,
+        width = "600px"
+      ),
     ),
-    map_ui("map", issues)[[2]]
+    navset_tab(
+      nav_panel(
+        "Map",
+        map_ui("map")[[1]]
+      ),
+      nav_panel("Table", "TABLE HERE")
+    ),
   )
   server <- function(input, output, session) {
-    map_server("map")
+    map_server("map", issue = input$issue)
   }
   shinyApp(ui, server) # nolint
   # profvis::profvis(runApp(shinyApp(ui, server))) #nolint
