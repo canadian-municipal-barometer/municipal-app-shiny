@@ -1,37 +1,29 @@
-library(ggplot2)
-library(dplyr)
-library(leaflet)
 library(shiny)
-library(sf)
+library(htmltools)
 
 map_ui <- function(id, issues) {
   tagList(
     selectInput(
       NS(id, "issue"),
-      label = "Select and issue:",
-      choices = issues
+      label = "Select an issue:",
+      choices = issues,
+      width = "600px"
     ),
-    plotOutput(NS(id, "map"))
+    uiOutput(NS(id, "map"))
   )
 }
 
 map_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    geo_data <- sf::read_sf("data/geo_simple/geo_simple.shp")
-
-    mrp_data <- reactive({
-      data <- readRDS("data/cmb25mrp_estimates.RDS")
-      data <- data |>
-        filter(issue == input$issue) |>
-        mutate(csd = as.character(csd))
-      return(data)
-    })
-    output$map <- renderPlot({
-      geo_data <- geo_data |>
-        dplyr::left_join(mrp_data(), by = c("CSDUID" = "csd"))
-      ggplot(geo_data) +
-        geom_sf(aes(fill = prediction)) +
-        theme_void()
+    output$map <- renderUI({
+      selected <- input$issue
+      tags$div(
+        style = "flex-grow: 1; display: flex;",
+        tags$iframe(
+          src = paste0(selected, ".html"), # relative to www/
+          style = "width: 100%; height: 600px;"
+        )
+      )
     })
   })
 }
