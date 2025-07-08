@@ -41,7 +41,8 @@ municipal_policy_app <- function() {
         "Map",
         map_ui("map")[[1]]
       ),
-      nav_panel("Table", "TABLE HERE")
+      nav_panel("Municipalities", "TABLE HERE"),
+      nav_panel("Issues", "TABLE HERE")
     ),
   )
   server <- function(input, output, session) {
