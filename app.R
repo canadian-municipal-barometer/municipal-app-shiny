@@ -8,6 +8,64 @@ issues <- jsonlite::fromJSON("data/statements_en.json")
 
 municipal_policy_app <- function() {
   ui <- fluidPage(
+    tags$head(
+      tags$style(HTML(
+        "
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        body {
+          display: flex;
+          flex-direction: column;
+          width: 100%; 
+        }
+        .container-fluid { 
+          flex-grow: 1; 
+          display: flex;
+          flex-direction: column;
+          width: 100%; 
+          max-width: 100%; 
+          padding-left: 0; 
+          padding-right: 0; 
+        }
+        #header {
+          flex-shrink: 0; 
+          width: 100%; 
+          
+        }
+        .container-fluid > div:nth-of-type(2) {
+          flex-shrink: 0; 
+          width: 100%; 
+        }
+        .tabbable { 
+          flex-grow: 1; 
+          display: flex;
+          flex-direction: column;
+          width: 100%; 
+        }
+        .tab-content {
+          flex-grow: 1; 
+          display: flex;
+          flex-direction: column;
+          width: 100%; 
+        }
+        div[data-value='Map'] {
+          flex-grow: 1; 
+          display: flex;
+          flex-direction: column;
+          width: 100%; 
+        }
+        #map-map { 
+          flex-grow: 1; 
+          height: 100%; 
+          width: 100%; 
+          border: none; 
+        }
+        "
+      ))
+    ),
     div(
       id = "header",
       style = "
@@ -58,3 +116,4 @@ municipal_policy_app <- function() {
 }
 
 municipal_policy_app()
+
