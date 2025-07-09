@@ -57,6 +57,10 @@ municipal_policy_app <- function() {
           flex-direction: column;
           width: 100%; 
         }
+        .nav.nav-tabs {
+          display: flex;
+          justify-content: center;
+        }
         #map-map { 
           flex-grow: 1; 
           height: 100%; 
