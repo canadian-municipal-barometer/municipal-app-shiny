@@ -3,6 +3,7 @@
 
 library(shiny)
 library(bslib)
+library(DT)
 
 issues <- jsonlite::fromJSON("data/statements_en.json")
 
@@ -43,12 +44,21 @@ municipal_policy_app <- function() {
         map_ui("map")[[1]]
       ),
       nav_panel("Municipalities", "TABLE HERE"),
-      nav_panel("Issues", "TABLE HERE")
+      nav_panel(
+        "Issues",
+        issues_ui("issues")
+      )
     ),
   )
   server <- function(input, output, session) {
     map_server(
       "map",
+      issue = reactive({
+        input$issue
+      })
+    )
+    issues_server(
+      "issues",
       issue = reactive({
         input$issue
       })
