@@ -57,6 +57,10 @@ table_server <- function(id, issue) {
           backgroundSize = '100% 90%',
           backgroundRepeat = 'no-repeat',
           backgroundPosition = 'center'
+        ) |>
+        formatStyle(
+          columns = c("Population", "% Renters", "Avg. Age", "Median After-tax Income"),
+          textAlign = 'right'
         )
     })
   })
