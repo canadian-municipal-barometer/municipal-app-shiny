@@ -22,7 +22,11 @@ issues_server <- function(id, issue) {
               "function(thead, data, start, end, display) {",
               "  var tooltips = ['', 'Full statement text.', 'Proportion that agree', 'Proportion that have an opinion', 'Standard deviation of municipal agreement proportions'];",
               "  $(thead).find('th').each(function(i) {",
-              "    $(this).attr('title', tooltips[i]);",
+              "    if (tooltips[i]) {",
+              "      var icon = $('<span> &#9432;</span>');",
+              "      icon.attr('title', tooltips[i]);",
+              "      $(this).append(icon);",
+              "    }",
               "  });",
               "}"
             )
