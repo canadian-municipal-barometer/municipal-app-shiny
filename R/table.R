@@ -49,7 +49,7 @@ table_server <- function(id, issue) {
         ),
         filter = "top"
       ) |>
-        formatRound(c('Agreement'), 3) |>
+        formatRound(c('Agreement'), 1) |>
         formatStyle(
           'Agreement',
           background = styleColorBar(
