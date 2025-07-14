@@ -5,6 +5,10 @@ library(shiny)
 library(bslib)
 library(DT)
 
+source("R/issues.R")
+source("R/map.R")
+source("R/table.R")
+
 issues <- jsonlite::fromJSON("data/statements_en.json")
 
 municipal_policy_app <- function() {
@@ -13,11 +17,11 @@ municipal_policy_app <- function() {
     div(
       id = "header",
       style = "
-          display: flex;
-          align-items: center;
-          justify-content: space-around;
-          height: 150px;
-        ",
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        height: 150px;
+      ",
       titlePanel("Municipal-level Policy Agreement"),
       a(
         img(
@@ -28,9 +32,9 @@ municipal_policy_app <- function() {
     ),
     div(
       style = "
-          display: flex;
-          justify-content: center;
-        ",
+        display: flex;
+        justify-content: center;
+      ",
       selectInput(
         "issue",
         label = "Select an issue:",
@@ -43,9 +47,10 @@ municipal_policy_app <- function() {
         "Map",
         map_ui("map")[[1]]
       ),
-      nav_panel("Municipalities", "TABLE HERE"),
+      nav_panel("Municipalities", table_ui("table")),
       nav_panel(
         "Issues",
+        h1("National statistics by issue", style = "text-align: center;"),
         issues_ui("issues")
       )
     ),
@@ -59,6 +64,12 @@ municipal_policy_app <- function() {
     )
     issues_server(
       "issues",
+      issue = reactive({
+        input$issue
+      })
+    )
+    table_server(
+      "table",
       issue = reactive({
         input$issue
       })

@@ -14,6 +14,7 @@ issues_server <- function(id, issue) {
     output$issues_table <- renderDT({
       issues_data |>
         datatable(
+          rownames = FALSE,
           options = list(
             dom = 'rt',
             paging = FALSE,
@@ -24,14 +25,18 @@ issues_server <- function(id, issue) {
               "  $(thead).find('th').each(function(i) {",
               "    if (tooltips[i]) {",
               "      var icon = $('<span> &#9432;</span>');",
-              "      icon.attr('title', tooltips[i]);",
               "      $(this).append(icon);",
+              "      $(this).find('span').attr('title', tooltips[i]);",
               "    }",
               "  });",
               "}"
             )
           ),
           filter = "top"
+        ) |>
+        formatStyle(
+          columns = c("Agreement", "Opinion", "Polarization"),
+          "text-align" = "right"
         )
     })
   })
