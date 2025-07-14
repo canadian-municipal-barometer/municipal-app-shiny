@@ -19,6 +19,7 @@ table_server <- function(id, issue) {
       df <- municipal_data[municipal_data$issue == issue(), ]
       df <- df[, c(
         "Name",
+        "Province",
         "prediction",
         "Population",
         "Pct. Renters",
@@ -27,6 +28,7 @@ table_server <- function(id, issue) {
       )]
       colnames(df) <- c(
         "Municipality",
+        "Province",
         "Agreement",
         "Population",
         "% Renters",
@@ -59,7 +61,12 @@ table_server <- function(id, issue) {
           backgroundPosition = 'center'
         ) |>
         formatStyle(
-          columns = c("Population", "% Renters", "Avg. Age", "Median After-tax Income"),
+          columns = c(
+            "Population",
+            "% Renters",
+            "Avg. Age",
+            "Median After-tax Income"
+          ),
           textAlign = 'right'
         )
     })
