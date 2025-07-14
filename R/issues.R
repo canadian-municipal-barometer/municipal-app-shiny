@@ -20,7 +20,7 @@ issues_server <- function(id, issue) {
             lengthChange = FALSE,
             headerCallback = JS(
               "function(thead, data, start, end, display) {",
-              "  var tooltips = ['Agreement score for the statement.', 'Standard deviation of agreement.', 'Opinion score related to the statement.', 'The full statement text.'];",
+              "  var tooltips = ['', 'Full statement text.', 'Proportion that agree', 'Proportion that have an opinion', 'Standard deviation of municipal agreement proportions'];",
               "  $(thead).find('th').each(function(i) {",
               "    $(this).attr('title', tooltips[i]);",
               "  });",
