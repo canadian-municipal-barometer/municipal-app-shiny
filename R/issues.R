@@ -3,7 +3,11 @@ library(DT)
 
 issues_ui <- function(id) {
   tagList(
-    DTOutput(NS(id, "issues_table"))
+    "header" = h1(
+      "National statistics by issue",
+      style = "text-align: center;"
+    ),
+    "table" = DTOutput(NS(id, "issues_table"))
   )
 }
 

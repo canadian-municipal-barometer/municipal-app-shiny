@@ -45,7 +45,7 @@ municipal_policy_app <- function() {
     navset_tab(
       nav_panel(
         "Map",
-        map_ui("map")[[1]]
+        map_ui("map")["map"]
       ),
       nav_panel("Municipalities", table_ui("table")),
       nav_panel(
