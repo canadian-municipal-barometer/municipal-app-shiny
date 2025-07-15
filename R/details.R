@@ -89,7 +89,7 @@ details_server <- function(id, issue) {
       ggplot(hist_data, aes(x = as.numeric(prediction))) +
         xlab("Pct. Agreement") +
         ylab("Count") +
-        geom_histogram() +
+        geom_histogram(fill = "#0091AC") +
         theme_minimal(base_size = 16) +
         theme(
           legend.position = "none",
@@ -118,7 +118,7 @@ details_server <- function(id, issue) {
         )
       ) +
         geom_point(alpha = 0.5) +
-        geom_smooth(method = "lm", se = FALSE, color = "red") +
+        geom_smooth(method = "lm", se = FALSE, color = "#0091AC") +
         xlab(input$corr_menu) +
         ylab("Pct. Agreement") +
         theme_minimal(base_size = 16)
