@@ -11,7 +11,7 @@ table_ui <- function(id) {
 table_server <- function(id, issue) {
   moduleServer(id, function(input, output, session) {
     muni_data <- read.csv(
-      "data/municipal-data-final.csv",
+      "data/municipal-data_table.csv",
       check.names = FALSE
     )
 
