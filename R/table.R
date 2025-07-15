@@ -10,13 +10,13 @@ table_ui <- function(id) {
 
 table_server <- function(id, issue) {
   moduleServer(id, function(input, output, session) {
-    municipal_data <- read.csv(
+    muni_data <- read.csv(
       "data/municipal-data-final.csv",
       check.names = FALSE
     )
 
     filtered_data <- reactive({
-      df <- municipal_data[municipal_data$issue == issue(), ]
+      df <- muni_data[muni_data$issue == issue(), ]
       df <- df[, c(
         "Name",
         "Province",
@@ -53,7 +53,7 @@ table_server <- function(id, issue) {
         formatStyle(
           'Agreement',
           background = styleColorBar(
-            range(municipal_data$prediction),
+            range(muni_data$prediction),
             'lightblue'
           ),
           backgroundSize = '100% 90%',
