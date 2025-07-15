@@ -5,10 +5,6 @@ library(shiny)
 library(bslib)
 library(DT)
 
-source("R/issues.R")
-source("R/map.R")
-source("R/table.R")
-
 issues <- jsonlite::fromJSON("data/statements_en.json")
 
 municipal_policy_app <- function() {
@@ -57,7 +53,9 @@ municipal_policy_app <- function() {
             details_ui("details")["muni_menu"]
           )
         ),
-        details_ui("details")["histogram"]
+        details_ui("details")["histogram"],
+        details_ui("details")["corr_menu"],
+        details_ui("details")["corr_plot"]
       ),
       nav_panel(
         "Municipalities",
