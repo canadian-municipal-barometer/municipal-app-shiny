@@ -15,33 +15,34 @@ details_ui <- function(id) {
 
 details_server <- function(id, issue) {
   moduleServer(id, function(input, output, session) {
-    issues_data <- read.csv("data/issues-data.csv")
-    muni_data <- read.csv("data/municipal-data-final.csv")
+    muni_data <- read.csv("data/municipal-data_raw.csv", check.names = FALSE)
 
     # --------------------
     # municipality menu
 
     # add an empty first row so that the select input's selectize has the empty
     # string in its first position to enable placeholder prompt
+    # These values are set as placeholders. 1 matches numeric columns in the
+    # main `muni_data` and "" matches character. This enables the correct types
+    # for the bind_rows operation
     muni_row1 <- tidyr::tibble(
-      csd = c(""),
-      prediction = c(""),
+      csd = c(1),
+      prediction = c(1),
       issue = c(""),
-      "Pct. Renters" = c(""),
-      Population = c(""),
-      "Pop. / sq. km" = c(""),
-      "Average Age" = c(""),
-      "Median After-tax income" = c(""),
+      "Pct. Renters" = c(1),
+      Population = c(1),
+      "Pop. / sq. km" = c(1),
+      "Average Age" = c(1),
+      "Median After-tax income" = c(1),
       Name = c(""),
       Province = c("")
     )
-    muni_data$csd <- as.character(muni_data$csd)
-    muni_data$prediction <- as.character(muni_data$prediction)
     muni_data <- bind_rows(muni_row1, muni_data)
+    print(colnames(muni_data))
 
     output$muni_menu <- renderUI(
       selectInput(
-        inputId = "menu",
+        inputId = "muni_menu",
         label = "",
         choices = unique(muni_data$Name),
         selectize = TRUE,
@@ -54,15 +55,12 @@ details_server <- function(id, issue) {
 
     output$corr_menu <- renderUI(
       selectInput(
-        inputId = "muni_menu",
-        label = "",
-        choices = c(
-          "Pct. Renters",
-          Population,
-          "Pop. / sq. km",
-          "Average Age",
-          "Median After-tax income",
-        ),
+        inputId = "corr_var",
+        label = "Correlate with...",
+        choices = colnames(muni_data)[
+          !(colnames(muni_data) %in%
+            c("prediction", "Name", "Province", "issue", "csd"))
+        ],
         selectize = TRUE,
         width = "100%",
       )
@@ -71,7 +69,13 @@ details_server <- function(id, issue) {
     # --------------------
     # Prediction Histogram
     output$histogram <- renderPlot({
-      hist_data <- muni_data |> filter(issue == issue())
+      hist_data <- muni_data |>
+        filter(
+          issue == issue(),
+          # filter out the empty row used for the muni_menu placeholder
+          Name != ""
+        )
+
       ggplot(hist_data, aes(x = as.numeric(prediction))) +
         xlab("Pct. Agreement") +
         ylab("Count") +
@@ -86,5 +90,28 @@ details_server <- function(id, issue) {
 
     # --------------------
     # Correlation Plot
+    output$corr_plot <- renderPlot({
+      req(input$corr_var)
+
+      corr_data <- muni_data |>
+        filter(
+          issue == issue(),
+          # filter out the empty row used for the muni_menu placeholder
+          Name != ""
+        )
+
+      ggplot(
+        corr_data,
+        aes(
+          x = .data[[input$corr_var]],
+          y = as.numeric(prediction)
+        )
+      ) +
+        geom_point(alpha = 0.5) +
+        geom_smooth(method = "lm", se = FALSE, color = "red") +
+        xlab(input$corr_var) +
+        ylab("Pct. Agreement") +
+        theme_minimal(base_size = 16)
+    })
   })
 }
