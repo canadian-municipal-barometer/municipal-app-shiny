@@ -47,11 +47,26 @@ municipal_policy_app <- function() {
         "Map",
         map_ui("map")["map"]
       ),
-      nav_panel("Municipalities", table_ui("table")),
+      nav_panel(
+        "Details",
+        div(
+          style = "display: flex; align-items: center; gap: 10px;",
+          "Municipality name:",
+          div(
+            style = "flex-grow: 1;",
+            details_ui("details")["muni_menu"]
+          )
+        ),
+        details_ui("details")["histogram"]
+      ),
+      nav_panel(
+        "Municipalities",
+        table_ui("table")
+      ),
       nav_panel(
         "Issues",
-        h1("National statistics by issue", style = "text-align: center;"),
-        issues_ui("issues")
+        issues_ui("issues")["header"],
+        issues_ui("issues")["table"]
       )
     ),
   )
@@ -70,6 +85,12 @@ municipal_policy_app <- function() {
     )
     table_server(
       "table",
+      issue = reactive({
+        input$issue
+      })
+    )
+    details_server(
+      "details",
       issue = reactive({
         input$issue
       })
