@@ -3,7 +3,7 @@ library(htmltools)
 
 map_ui <- function(id) {
   tagList(
-    uiOutput(NS(id, "map"))
+    "map" = uiOutput(NS(id, "map"))
   )
 }
 
