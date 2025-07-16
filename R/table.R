@@ -35,7 +35,7 @@ table_server <- function(id, issue) {
         "Avg. Age",
         "Median After-tax Income"
       )
-      df
+      return(df)
     })
 
     output$municipal_table <- renderDT({
@@ -45,7 +45,10 @@ table_server <- function(id, issue) {
         options = list(
           dom = 'rt',
           paging = FALSE,
-          lengthChange = FALSE
+          lengthChange = FALSE,
+          columnDefs = list(
+            list(targets = c(1, 2, 3, 4, 5, 6), className = "dt-right")
+          )
         ),
         filter = "top"
       ) |>
@@ -63,6 +66,7 @@ table_server <- function(id, issue) {
         formatStyle(
           columns = c(
             "Population",
+            "Province",
             "% Renters",
             "Avg. Age",
             "Median After-tax Income"
