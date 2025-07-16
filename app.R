@@ -55,7 +55,8 @@ municipal_policy_app <- function() {
         ),
         details_ui("details")["histogram"],
         details_ui("details")["corr_menu"],
-        details_ui("details")["corr_plot"]
+        details_ui("details")["corr_plot"],
+        details_ui("details")["pred_plot"]
       ),
       nav_panel(
         "Municipalities",
