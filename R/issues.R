@@ -11,7 +11,7 @@ issues_ui <- function(id) {
   )
 }
 
-issues_server <- function(id, issue) {
+issues_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     issues_data <- read.csv("data/issues-data.csv")
     issues_data <- issues_data |> select(-issue_id)

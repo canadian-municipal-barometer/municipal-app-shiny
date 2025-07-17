@@ -1,27 +1,27 @@
 issue_id,Issue,Agreement,Opinion,Polarization
-pa_iss_1,"Municipal governments should reallocate a portion of their police budgets to fund social programs and mental health services, even if it means reducing the number of active police officers.",0.45,0.69,0.08
-pa_iss_10,"Municipalities should relax environmental regulations to attract businesses, even if it increases pollution in lower-income neighbourhoods.",0.3,0,0.1
-pa_iss_11,"Municipal governments should reduce funding for bike lanes and focus on road expansion for vehicles, even if it makes the municipality less bike-friendly.",0.53,0.87,0.11
-pa_iss_12,"Municipal governments should stop subsidizing public transit fares and instead focus on improving road infrastructure, even if it leads to fewer people using public transportation.",0.49,0.23,0.13
-pa_iss_13,"Municipal governments should invest heavily in expanding bike lanes, even if it means reducing the number of lanes for cars on major roads.",0.41,0.04,0.07
-pa_iss_14,"Municipalities should prioritize protecting existing neighbourhoods from high-density developments, even if it makes housing less affordable for new residents.",0.54,0.41,0.12
-pa_iss_15,"Municipalities should prioritize zoning policies that protect single-family homes, even if it restricts the development of more affordable housing options like duplexes or townhouses.",0.68,0.9,0.11
-pa_iss_16,"Municipalities should offer tax breaks and incentives for green businesses, even if it increases taxes for other industries.",0.63,0.69,0.14
-pa_iss_17,"Municipalities should require large companies to contribute to local infrastructure and social programs, even if it makes them less likely to set up offices in the area.",0.65,0.05,0.11
-pa_iss_18,"Municipalities should require developers to include affordable housing units in new luxury developments, even if it reduces the overall profitability of those projects.",0.75,0.65,0.11
-pa_iss_19,"Municipalities should reduce business taxes to stay competitive with other regions, even if it means cutting funding for public infrastructure projects like transit and road repairs.",0.38,0.6,0.05
-pa_iss_2,"Municipal governments should prioritize hiring more community outreach workers over expanding police forces, as a way to address the root causes of crime.",0.65,0.16,0.07
-pa_iss_20,"Municipal governments should increase user fees for public services like garbage collection and parking, rather than raising property taxes across the board.",0.5,0.53,0.05
-pa_iss_21,Municipal governments should raise property taxes on second homes to fund affordable housing projects.,0.58,0.32,0.1
+pa_iss_1,"Municipal governments should reallocate a portion of their police budgets to fund social programs and mental health services, even if it means reducing the number of active police officers.",0.45,0.76,0.08
+pa_iss_10,"Municipalities should relax environmental regulations to attract businesses, even if it increases pollution in lower-income neighbourhoods.",0.3,0.46,0.1
+pa_iss_11,"Municipal governments should reduce funding for bike lanes and focus on road expansion for vehicles, even if it makes the municipality less bike-friendly.",0.53,0.96,0.11
+pa_iss_12,"Municipal governments should stop subsidizing public transit fares and instead focus on improving road infrastructure, even if it leads to fewer people using public transportation.",0.49,0.62,0.13
+pa_iss_13,"Municipal governments should invest heavily in expanding bike lanes, even if it means reducing the number of lanes for cars on major roads.",0.41,0.02,0.07
+pa_iss_14,"Municipalities should prioritize protecting existing neighbourhoods from high-density developments, even if it makes housing less affordable for new residents.",0.54,0.82,0.12
+pa_iss_15,"Municipalities should prioritize zoning policies that protect single-family homes, even if it restricts the development of more affordable housing options like duplexes or townhouses.",0.68,0.18,0.11
+pa_iss_16,"Municipalities should offer tax breaks and incentives for green businesses, even if it increases taxes for other industries.",0.63,0.74,0.14
+pa_iss_17,"Municipalities should require large companies to contribute to local infrastructure and social programs, even if it makes them less likely to set up offices in the area.",0.65,0.95,0.11
+pa_iss_18,"Municipalities should require developers to include affordable housing units in new luxury developments, even if it reduces the overall profitability of those projects.",0.75,0.96,0.11
+pa_iss_19,"Municipalities should reduce business taxes to stay competitive with other regions, even if it means cutting funding for public infrastructure projects like transit and road repairs.",0.38,0.52,0.05
+pa_iss_2,"Municipal governments should prioritize hiring more community outreach workers over expanding police forces, as a way to address the root causes of crime.",0.65,0.93,0.07
+pa_iss_20,"Municipal governments should increase user fees for public services like garbage collection and parking, rather than raising property taxes across the board.",0.5,0.27,0.05
+pa_iss_21,Municipal governments should raise property taxes on second homes to fund affordable housing projects.,0.58,0.22,0.1
 pa_iss_22,"Municipal governments should allocate more resources to reconciliation programs for urban Indigenous communities, even if it means reducing funding for other local services.",0.44,0.45,0.1
-pa_iss_23,"Municipal governments should maintain historical statues and monuments, even if some figures had controversial or prejudiced views.",0.73,0.58,0.08
-pa_iss_24,"Municipal governments should remove all statues of controversial historical figures, even if it angers some long-term residents.",0.34,0.7,0.07
-pa_iss_25,"Municipalities should ensure equal representation of women and minorities on council, even if it requires changing current election rules.",0.55,0.09,0.09
-pa_iss_26,Municipalities should not allocate additional funds for inclusion and diversity programs if it means cutting resources for economic development.,0.7,0.01,0.09
-pa_iss_3,"Municipal governments should reduce funding for immigrant-focused programs and instead prioritize services that benefit all residents equally, regardless of immigration status.",0.83,0.8,0.08
-pa_iss_4,"Municipalities should expand funding for language and job training programs targeted at immigrants to help them integrate into the local economy, even if this reduces funding for other municipal services.",0.5,0.22,0.17
-pa_iss_5,"Municipalities should focus on improving economic development rather than implementing costly climate change mitigation strategies that could limit business growth, even if it leads to higher emissions.",0.61,0.46,0.12
-pa_iss_6,"Municipal governments should ban single-use plastics in all public spaces, even if this creates inconvenience for local businesses and residents.",0.65,0.99,0.11
-pa_iss_7,"Municipalities should allow private companies to handle waste management and recycling services to reduce public spending, even if it results in lower environmental standards.",0.53,0.91,0.07
-pa_iss_8,"Municipal governments should mandate that all new developments meet strict environmental standards, even if it increases the cost of housing and construction.",0.68,0.53,0.09
-pa_iss_9,"Municipal governments should prioritize economic growth and development over strict environmental regulations, even if it results in increased pollution or environmental degradation.",0.43,0.13,0.15
+pa_iss_23,"Municipal governments should maintain historical statues and monuments, even if some figures had controversial or prejudiced views.",0.73,0.07,0.08
+pa_iss_24,"Municipal governments should remove all statues of controversial historical figures, even if it angers some long-term residents.",0.34,0.24,0.07
+pa_iss_25,"Municipalities should ensure equal representation of women and minorities on council, even if it requires changing current election rules.",0.55,1,0.09
+pa_iss_26,Municipalities should not allocate additional funds for inclusion and diversity programs if it means cutting resources for economic development.,0.7,0.33,0.09
+pa_iss_3,"Municipal governments should reduce funding for immigrant-focused programs and instead prioritize services that benefit all residents equally, regardless of immigration status.",0.83,0.86,0.08
+pa_iss_4,"Municipalities should expand funding for language and job training programs targeted at immigrants to help them integrate into the local economy, even if this reduces funding for other municipal services.",0.5,0.03,0.17
+pa_iss_5,"Municipalities should focus on improving economic development rather than implementing costly climate change mitigation strategies that could limit business growth, even if it leads to higher emissions.",0.61,0.59,0.12
+pa_iss_6,"Municipal governments should ban single-use plastics in all public spaces, even if this creates inconvenience for local businesses and residents.",0.65,0.74,0.11
+pa_iss_7,"Municipalities should allow private companies to handle waste management and recycling services to reduce public spending, even if it results in lower environmental standards.",0.53,0.83,0.07
+pa_iss_8,"Municipal governments should mandate that all new developments meet strict environmental standards, even if it increases the cost of housing and construction.",0.68,0.85,0.09
+pa_iss_9,"Municipal governments should prioritize economic growth and development over strict environmental regulations, even if it results in increased pollution or environmental degradation.",0.43,0.76,0.15
