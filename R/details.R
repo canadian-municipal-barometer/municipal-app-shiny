@@ -3,39 +3,17 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 library(DT)
+library(DBI)
+library(duckdb)
 
-muni_data <- read.csv("data/municipal-data_raw.csv", check.names = FALSE)
-issues_data <- read.csv("data/issues-data.csv")
-issues_data <- issues_data |>
-  select("issue" = issue_id, "Agreement" = Agreement, Opinion)
-
-# add an empty first row so that the select input's selectize has the empty
-# string in its first position to enable placeholder prompt
-# These values are set as placeholders. 1 matches numeric columns in the
-# main `muni_data` and "" matches character. This enables the correct types
-# for the bind_rows operation
-muni_row1 <- tidyr::tibble(
-  csd = c(1),
-  prediction = c(1),
-  issue = c(""),
-  "Pct. Renters" = c(1),
-  Population = c(1),
-  "Pop. / sq. km" = c(1),
-  "Average Age" = c(1),
-  "Median After-tax income" = c(1),
-  Name = c(""),
-  Province = c("")
-)
-muni_data <- bind_rows(muni_row1, muni_data)
-muni_data$Population <- log(muni_data$Population)
-muni_data$"Pop. / sq. km" <- log(muni_data$"Pop. / sq. km")
+muni_list <- readRDS("data/muni-list.RDS")
 
 details_ui <- function(id) {
   tagList(
     "muni_menu" = selectInput(
       inputId = NS(id, "muni_menu"),
       label = "",
-      choices = unique(muni_data$Name),
+      choices = muni_list,
       selectize = TRUE,
       width = "100%",
     ),
@@ -107,44 +85,28 @@ details_server <- function(id, selected_issue) {
     })
 
     # --------------------
-    # prep pred bar plot
+    # Data for pred plot
     pred_data <- reactive({
-      req(selected_issue())
-      req(input$muni_menu != "")
-      req(input$muni_menu)
+      req(input$muni_menu, selected_issue())
 
-      muni <- muni_data |>
-        filter(
-          issue == selected_issue(),
-          Name == input$muni_menu,
-          # filter out the empty row used for the muni_menu placeholder
-          Name != ""
-        ) |>
-        select("Agreement" = prediction, issue, "Opinion" = opinion) |>
-        mutate(group = "Municipality")
+      con <- dbConnect(
+        duckdb::duckdb(),
+        dbdir = "data/natl_comp_plot_data.duckdb",
+        read_only = TRUE
+      )
+      on.exit(dbDisconnect(con, shutdown = TRUE))
 
-      # rename variables and create group IDs
-      natl <- issues_data |>
-        filter(issue == selected_issue()) |>
-        mutate(group = "National")
-
-      pred_data <- bind_rows(muni, natl)
-
-      pred_data <- pred_data |>
-        pivot_longer(
-          cols = c(Agreement, Opinion),
-          names_to = "pred_type",
-          values_to = "pred"
-        )
-
-      pred_data$pred <- round(pred_data$pred, 2) * 100
-      pred_data
+      dbGetQuery(
+        con,
+        "SELECT * FROM plot_data WHERE muni = ? AND issue = ?",
+        params = list(input$muni_menu, selected_issue())
+      )
     })
 
     # --------------------
     # pred bar plot
     output$pred_plot <- renderPlot({
-      req(pred_data)
+      req(pred_data())
 
       ggplot(pred_data(), aes(x = pred_type, y = pred, fill = group)) +
         geom_col(
@@ -173,3 +135,4 @@ details_server <- function(id, selected_issue) {
     })
   })
 }
+

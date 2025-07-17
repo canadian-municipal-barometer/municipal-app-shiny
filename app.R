@@ -32,7 +32,7 @@ municipal_policy_app <- function() {
         justify-content: center;
       ",
       selectInput(
-        "issue",
+        "selected_issue",
         label = "Select an issue:",
         choices = issues,
         width = "600px"
@@ -72,26 +72,21 @@ municipal_policy_app <- function() {
   server <- function(input, output, session) {
     map_server(
       "map",
-      issue = reactive({
-        input$issue
+      selected_issue = reactive({
+        input$selected_issue
       })
     )
-    issues_server(
-      "issues",
-      issue = reactive({
-        input$issue
-      })
-    )
+    issues_server("issues")
     table_server(
       "table",
-      issue = reactive({
-        input$issue
+      selected_issue = reactive({
+        input$selected_issue
       })
     )
     details_server(
       "details",
-      issue = reactive({
-        input$issue
+      selected_issue = reactive({
+        input$selected_issue
       })
     )
   }
