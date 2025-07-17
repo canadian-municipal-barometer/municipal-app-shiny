@@ -8,7 +8,7 @@ table_ui <- function(id) {
   )
 }
 
-table_server <- function(id, issue) {
+table_server <- function(id, selected_issue) {
   moduleServer(id, function(input, output, session) {
     muni_data <- read.csv(
       "data/municipal-data_table.csv",
@@ -16,7 +16,7 @@ table_server <- function(id, issue) {
     )
 
     filtered_data <- reactive({
-      df <- muni_data[muni_data$issue == issue(), ]
+      df <- muni_data[muni_data$issue == selected_issue(), ]
       df <- df[, c(
         "Name",
         "Province",

@@ -1,6 +1,7 @@
 library(shiny)
 library(dplyr)
 library(ggplot2)
+library(tidyr)
 library(DT)
 
 muni_data <- read.csv("data/municipal-data_raw.csv", check.names = FALSE)
@@ -55,14 +56,14 @@ details_ui <- function(id) {
   )
 }
 
-details_server <- function(id, issue) {
+details_server <- function(id, selected_issue) {
   moduleServer(id, function(input, output, session) {
     # --------------------
     # Prediction Histogram
     output$histogram <- renderPlot({
       hist_data <- muni_data |>
         filter(
-          issue == issue(),
+          issue == selected_issue(),
           # filter out the empty row used for the muni_menu placeholder
           Name != ""
         )
@@ -86,7 +87,7 @@ details_server <- function(id, issue) {
 
       corr_data <- muni_data |>
         filter(
-          issue == issue(),
+          issue == selected_issue(),
           # filter out the empty row used for the muni_menu placeholder
           Name != ""
         )
@@ -106,16 +107,15 @@ details_server <- function(id, issue) {
     })
 
     # --------------------
-    # prediction/opinion plot
-    output$pred_plot <- renderPlot({
+    # prep pred bar plot
+    pred_data <- reactive({
+      req(selected_issue())
+      req(input$muni_menu != "")
       req(input$muni_menu)
-      req(issue())
 
-      colnames(issues_data)
-
-      pred_data <- muni_data |>
+      muni <- muni_data |>
         filter(
-          issue == issue(),
+          issue == selected_issue(),
           Name == input$muni_menu,
           # filter out the empty row used for the muni_menu placeholder
           Name != ""
@@ -124,23 +124,29 @@ details_server <- function(id, issue) {
         mutate(group = "Municipality")
 
       # rename variables and create group IDs
-      issues_data <- issues_data |>
-        filter(issue == issue()) |>
+      natl <- issues_data |>
+        filter(issue == selected_issue()) |>
         mutate(group = "National")
 
-      plot_data <- bind_rows(pred_data, issues_data)
+      pred_data <- bind_rows(muni, natl)
 
-      plot_data <- plot_data |>
+      pred_data <- pred_data |>
         pivot_longer(
           cols = c(Agreement, Opinion),
           names_to = "pred_type",
           values_to = "pred"
         )
 
-      plot_data$pred <- round(plot_data$pred, 2) * 100
-      print(plot_data)
+      pred_data$pred <- round(pred_data$pred, 2) * 100
+      pred_data
+    })
 
-      ggplot(plot_data, aes(x = pred_type, y = pred, fill = group)) +
+    # --------------------
+    # pred bar plot
+    output$pred_plot <- renderPlot({
+      req(pred_data)
+
+      ggplot(pred_data(), aes(x = pred_type, y = pred, fill = group)) +
         geom_col(
           position = "dodge"
         ) +
