@@ -5,10 +5,6 @@ library(shiny)
 library(bslib)
 library(DT)
 
-source("R/issues.R")
-source("R/map.R")
-source("R/table.R")
-
 issues <- jsonlite::fromJSON("data/statements_en.json")
 
 municipal_policy_app <- function() {
@@ -36,7 +32,7 @@ municipal_policy_app <- function() {
         justify-content: center;
       ",
       selectInput(
-        "issue",
+        "selected_issue",
         label = "Select an issue:",
         choices = issues,
         width = "600px"
@@ -45,33 +41,63 @@ municipal_policy_app <- function() {
     navset_tab(
       nav_panel(
         "Map",
-        map_ui("map")[[1]]
+        map_ui("map")["map"]
       ),
-      nav_panel("Municipalities", table_ui("table")),
+      nav_panel(
+        "Details",
+        navset_pill_list(
+          nav_panel(
+            "National Comparison",
+            div(
+              style = "display: flex; align-items: center; gap: 10px;",
+              "Municipality name:",
+              div(
+                style = "flex-grow: 1;",
+                details_ui("details")["muni_menu"]
+              )
+            ),
+            details_ui("details")["pred_plot"]
+          ),
+          nav_panel(
+            "Correlations",
+            details_ui("details")["corr_menu"],
+            details_ui("details")["corr_plot"]
+          ),
+          nav_panel(
+            "Polarization",
+            details_ui("details")["histogram"],
+          ),
+        ),
+      ),
+      nav_panel(
+        "Municipalities",
+        table_ui("table")
+      ),
       nav_panel(
         "Issues",
-        h1("National statistics by issue", style = "text-align: center;"),
-        issues_ui("issues")
+        issues_ui("issues")["header"],
+        issues_ui("issues")["table"]
       )
     ),
   )
   server <- function(input, output, session) {
     map_server(
       "map",
-      issue = reactive({
-        input$issue
+      selected_issue = reactive({
+        input$selected_issue
       })
     )
-    issues_server(
-      "issues",
-      issue = reactive({
-        input$issue
-      })
-    )
+    issues_server("issues")
     table_server(
       "table",
-      issue = reactive({
-        input$issue
+      selected_issue = reactive({
+        input$selected_issue
+      })
+    )
+    details_server(
+      "details",
+      selected_issue = reactive({
+        input$selected_issue
       })
     )
   }

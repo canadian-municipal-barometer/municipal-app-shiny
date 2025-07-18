@@ -3,13 +3,18 @@ library(DT)
 
 issues_ui <- function(id) {
   tagList(
-    DTOutput(NS(id, "issues_table"))
+    "header" = h1(
+      "National statistics by issue",
+      style = "text-align: center;"
+    ),
+    "table" = DTOutput(NS(id, "issues_table"))
   )
 }
 
-issues_server <- function(id, issue) {
+issues_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     issues_data <- read.csv("data/issues-data.csv")
+    issues_data <- issues_data |> select(-issue_id)
 
     output$issues_table <- renderDT({
       issues_data |>

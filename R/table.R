@@ -8,15 +8,15 @@ table_ui <- function(id) {
   )
 }
 
-table_server <- function(id, issue) {
+table_server <- function(id, selected_issue) {
   moduleServer(id, function(input, output, session) {
-    municipal_data <- read.csv(
-      "data/municipal-data-final.csv",
+    muni_data <- read.csv(
+      "data/municipal-data_table.csv",
       check.names = FALSE
     )
 
     filtered_data <- reactive({
-      df <- municipal_data[municipal_data$issue == issue(), ]
+      df <- muni_data[muni_data$issue == selected_issue(), ]
       df <- df[, c(
         "Name",
         "Province",
@@ -35,7 +35,7 @@ table_server <- function(id, issue) {
         "Avg. Age",
         "Median After-tax Income"
       )
-      df
+      return(df)
     })
 
     output$municipal_table <- renderDT({
@@ -45,7 +45,10 @@ table_server <- function(id, issue) {
         options = list(
           dom = 'rt',
           paging = FALSE,
-          lengthChange = FALSE
+          lengthChange = FALSE,
+          columnDefs = list(
+            list(targets = c(1, 2, 3, 4, 5, 6), className = "dt-right")
+          )
         ),
         filter = "top"
       ) |>
@@ -53,7 +56,7 @@ table_server <- function(id, issue) {
         formatStyle(
           'Agreement',
           background = styleColorBar(
-            range(municipal_data$prediction),
+            range(muni_data$prediction),
             'lightblue'
           ),
           backgroundSize = '100% 90%',
@@ -63,6 +66,7 @@ table_server <- function(id, issue) {
         formatStyle(
           columns = c(
             "Population",
+            "Province",
             "% Renters",
             "Avg. Age",
             "Median After-tax Income"
