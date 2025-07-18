@@ -5,8 +5,10 @@ library(tidyr)
 library(DT)
 library(DBI)
 library(duckdb)
+library(readr)
 
 muni_list <- readRDS("data/muni-list.RDS")
+muni_data <- read_csv("data/municipal-data_raw.csv")
 
 details_ui <- function(id) {
   tagList(
@@ -22,7 +24,15 @@ details_ui <- function(id) {
       label = "Correlate with...",
       choices = colnames(muni_data)[
         !(colnames(muni_data) %in%
-          c("prediction", "Name", "Province", "issue", "csd"))
+          c(
+            "prediction",
+            "Name",
+            "Province",
+            "issue",
+            "csd",
+            "Pop. / sq. km",
+            "Population"
+          ))
       ],
       selectize = TRUE,
       width = "100%",
@@ -66,8 +76,6 @@ details_server <- function(id, selected_issue) {
       corr_data <- muni_data |>
         filter(
           issue == selected_issue(),
-          # filter out the empty row used for the muni_menu placeholder
-          Name != ""
         )
 
       ggplot(
@@ -135,4 +143,3 @@ details_server <- function(id, selected_issue) {
     })
   })
 }
-
