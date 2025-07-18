@@ -45,18 +45,29 @@ municipal_policy_app <- function() {
       ),
       nav_panel(
         "Details",
-        div(
-          style = "display: flex; align-items: center; gap: 10px;",
-          "Municipality name:",
-          div(
-            style = "flex-grow: 1;",
-            details_ui("details")["muni_menu"]
-          )
+        navset_pill_list(
+          nav_panel(
+            "National Comparison",
+            div(
+              style = "display: flex; align-items: center; gap: 10px;",
+              "Municipality name:",
+              div(
+                style = "flex-grow: 1;",
+                details_ui("details")["muni_menu"]
+              )
+            ),
+            details_ui("details")["pred_plot"]
+          ),
+          nav_panel(
+            "Correlations",
+            details_ui("details")["corr_menu"],
+            details_ui("details")["corr_plot"]
+          ),
+          nav_panel(
+            "Polarization",
+            details_ui("details")["histogram"],
+          ),
         ),
-        details_ui("details")["histogram"],
-        details_ui("details")["corr_menu"],
-        details_ui("details")["corr_plot"],
-        details_ui("details")["pred_plot"]
       ),
       nav_panel(
         "Municipalities",

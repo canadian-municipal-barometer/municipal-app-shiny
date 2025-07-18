@@ -39,7 +39,6 @@ details_ui <- function(id) {
     ),
     "histogram" = plotOutput(NS(id, "histogram")),
     "corr_plot" = plotOutput(NS(id, "corr_plot")),
-    "nat_comp" = plotOutput(NS(id, "nat_comp")),
     "pred_plot" = plotOutput(NS(id, "pred_plot"))
   )
 }
