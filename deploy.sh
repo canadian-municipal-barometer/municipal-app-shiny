@@ -12,7 +12,7 @@ git checkout prod
 git merge main --no-ff -m "Merge main into prod for deployment"
 
 # Remove renv files
-git rm -rf renv .Rprofile renv.lock deploy.sh
+rm -rf renv .Rprofile renv.lock deploy.sh
 
 # Commit the changes
 git add -A && git commit -m "Remove renv files for production deployment"
