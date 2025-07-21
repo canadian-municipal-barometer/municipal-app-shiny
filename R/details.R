@@ -29,6 +29,7 @@ details_ui <- function(id) {
             "Name",
             "Province",
             "issue",
+            "opinion",
             "csd",
             "Pop. / sq. km",
             "Population"
