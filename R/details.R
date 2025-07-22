@@ -25,7 +25,7 @@ details_ui <- function(id) {
       choices = colnames(muni_data)[
         !(colnames(muni_data) %in%
           c(
-            "prediction",
+            "agree",
             "Name",
             "Province",
             "issue",
@@ -56,7 +56,7 @@ details_server <- function(id, selected_issue) {
           Name != ""
         )
 
-      ggplot(hist_data, aes(x = as.numeric(prediction))) +
+      ggplot(hist_data, aes(x = as.numeric(agree))) +
         xlab("Pct. Agreement") +
         ylab("Count") +
         geom_histogram(fill = "#0091AC") +
@@ -82,7 +82,7 @@ details_server <- function(id, selected_issue) {
         corr_data,
         aes(
           x = .data[[input$corr_menu]],
-          y = as.numeric(prediction)
+          y = as.numeric(agree)
         )
       ) +
         geom_point(alpha = 0.5) +

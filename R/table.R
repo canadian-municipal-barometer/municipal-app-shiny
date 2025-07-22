@@ -56,7 +56,7 @@ table_server <- function(id, selected_issue) {
         formatStyle(
           'Agreement',
           background = styleColorBar(
-            range(muni_data$prediction),
+            range(muni_data$agree),
             'lightblue'
           ),
           backgroundSize = '100% 90%',
