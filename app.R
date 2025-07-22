@@ -56,7 +56,7 @@ municipal_policy_app <- function() {
                 details_ui("details")["muni_menu"]
               )
             ),
-            details_ui("details")["pred_plot"]
+            natl_comp_ui("natl_comp")["plot"]
           ),
           nav_panel(
             "Correlations",
@@ -94,11 +94,18 @@ municipal_policy_app <- function() {
         input$selected_issue
       })
     )
-    details_server(
+    selected_muni <- details_server(
       "details",
       selected_issue = reactive({
         input$selected_issue
       })
+    )
+    natl_comp_server(
+      "natl_comp",
+      selected_issue = reactive({
+        input$selected_issue
+      }),
+      selected_muni = selected_muni
     )
   }
   shinyApp(ui, server) # nolint
