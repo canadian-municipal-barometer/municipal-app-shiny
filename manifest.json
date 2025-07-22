@@ -2496,7 +2496,7 @@
   },
   "files": {
     "app.R": {
-      "checksum": "d48ddd930864e052247ae2f5199ca99c"
+      "checksum": "305ae9138b8467f44ad9ef204a51730c"
     },
     "data/issues-data.csv": {
       "checksum": "e9ff75ff5509d8d718e3416de57f8be1"
@@ -2505,19 +2505,19 @@
       "checksum": "ae9f23e3edaafedc237383ddfc27de76"
     },
     "data/municipal-data_raw.csv": {
-      "checksum": "726800db07652b9877beb51a03e57906"
+      "checksum": "388f4e0b226c15980183cef61fae6e88"
     },
     "data/municipal-data_table.csv": {
-      "checksum": "b1b415bde6108d2464a3a2b9a9b9b9f0"
+      "checksum": "81452a84b41bbe5196da30666307b358"
     },
     "data/natl_comp_plot_data.duckdb": {
-      "checksum": "25e4fcfcd79235e6a191efc326f85b9e"
+      "checksum": "f46a3dadb6a0ecc38e517e7ecb5ee0ad"
     },
     "data/statements_en.json": {
       "checksum": "89b41dde26a1d50c462622aafc21aeac"
     },
     "R/details.R": {
-      "checksum": "e8c0dc0d976393246a13bf9cfbb515e0"
+      "checksum": "e52a5714d976e3ed16bf3902b74ef8d9"
     },
     "R/issues.R": {
       "checksum": "a2454e55a733589903eb05876c6ee47e"
@@ -2525,8 +2525,11 @@
     "R/map.R": {
       "checksum": "839f231a4050d72f8c198dd99550aac7"
     },
+    "R/natl_comp.R": {
+      "checksum": "47fbac3df8a0fdae9f8b6cb68218fefa"
+    },
     "R/table.R": {
-      "checksum": "259db3eda77bd5afda534005ec0e07ba"
+      "checksum": "af60af691645dfc394eb0dd046eb064d"
     },
     "README.md": {
       "checksum": "d41d8cd98f00b204e9800998ecf8427e"

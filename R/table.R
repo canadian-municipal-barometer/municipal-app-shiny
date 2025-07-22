@@ -20,7 +20,7 @@ table_server <- function(id, selected_issue) {
       df <- df[, c(
         "Name",
         "Province",
-        "prediction",
+        "agree",
         "Population",
         "Pct. Renters",
         "Average Age",
