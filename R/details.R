@@ -23,17 +23,14 @@ details_ui <- function(id) {
       inputId = NS(id, "corr_menu"),
       label = "Correlate with...",
       choices = colnames(muni_data)[
-        !(colnames(muni_data) %in%
+        colnames(muni_data) %in%
           c(
-            "agree",
-            "Name",
-            "Province",
-            "issue",
-            "opinion",
-            "csd",
-            "Pop. / sq. km",
-            "Population"
-          ))
+            "Pct. renters",
+            "Average age",
+            "Median after-tax income",
+            "Pop. / sq. km (log.)",
+            "Population (log.)"
+          )
       ],
       selectize = TRUE,
       width = "100%",
