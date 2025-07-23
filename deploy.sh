@@ -13,5 +13,11 @@ git add -A && git commit -m "Remove renv files for production deployment"
 # Create the manifest file (required for Posit Connect Cloud)
 Rscript -e "rsconnect::writeManifest()"
 echo "manifest.json updated"
-echo "'prod' branch is now ready for deployment"
-echo "Push 'prod' to deploy"
+git push
+echo "'prod' branch pushed"
+git checkout main
+Rscript -e "renv::restore()"
+echo "Deployment successful"
+echo "'main' dev state preserved"
+echo "You are on branch 'main'"
+
