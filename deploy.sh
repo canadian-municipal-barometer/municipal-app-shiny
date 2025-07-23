@@ -20,7 +20,7 @@ git reset --hard main
 
 # 3. Remove development files from prod branch
 echo "Removing development files from prod branch..."
-git rm -r --ignore-unmatch renv .Rprofile renv.lock deploy.sh
+git rm -r --ignore-unmatch renv .Rprofile deploy.sh
 # The commit will only happen if git rm did something
 if ! git diff-index --quiet HEAD; then
     git commit -m "Remove dev files for deployment"
