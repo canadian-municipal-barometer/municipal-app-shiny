@@ -1,26 +1,46 @@
 #!/bin/bash
 
+set -e
+
 # This script prepares the prod branch for deployment.
 
-# update the renv snapshot
+# 1. Update renv.lock on main branch
+echo "Updating renv.lock on main branch..."
+Rscript -e "renv::restore()"
 Rscript -e "renv::snapshot()"
-git add -A && git commit -m "update renv before deployment"
+if ! git diff-index --quiet HEAD -- renv.lock; then
+    git add renv.lock
+    git commit -m "Update renv.lock before deployment"
+fi
+
+# 2. Force update prod branch from main
+echo "Updating prod branch from main..."
 git checkout prod
-git merge main --no-ff -m "Merge main into prod for deployment"
-# Remove renv files from prod (required for Posit Connect Cloud)
-rm -rf renv .Rprofile renv.lock deploy.sh
-git rm renv .Rprofile renv.lock deploy.sh
-git add -A && git commit -m "Remove renv files for production deployment"
-# Create the manifest file (required for Posit Connect Cloud)
-Rscript -e "install.packages('rsconnect')"
+git reset --hard main
+
+# 3. Remove development files from prod branch
+echo "Removing development files from prod branch..."
+git rm -r --ignore-unmatch renv .Rprofile renv.lock deploy.sh
+# The commit will only happen if git rm did something
+if ! git diff-index --quiet HEAD; then
+    git commit -m "Remove dev files for deployment"
+fi
+
+# 4. Generate manifest.json for Posit Connect
+echo "Generating manifest.json..."
+Rscript -e "if(!require('rsconnect')) install.packages('rsconnect', quiet = TRUE)"
 Rscript -e "rsconnect::writeManifest()"
-git add -A && git commit -m "manifest.json updated and committed"
-echo "manifest.json updated"
-git push
-echo "'prod' branch pushed"
+git add manifest.json
+git commit -m "Generate manifest.json"
+
+# 5. Force push to prod
+echo "Pushing to prod branch..."
+git push origin prod --force
+
+# 6. Return to main branch and restore dev environment
+echo "Returning to main branch..."
 git checkout main
 Rscript -e "renv::restore()"
-echo "Deployment successful"
-echo "'main' dev state preserved"
-echo "You are on branch 'main'"
 
+echo "Deployment to prod branch complete."
+echo "You are back on the main branch."
