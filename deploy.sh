@@ -9,8 +9,10 @@ git checkout prod
 git merge main --no-ff -m "Merge main into prod for deployment"
 # Remove renv files from prod (required for Posit Connect Cloud)
 rm -rf renv .Rprofile renv.lock deploy.sh
+git rm renv .Rprofile renv.lock deploy.sh
 git add -A && git commit -m "Remove renv files for production deployment"
 # Create the manifest file (required for Posit Connect Cloud)
+Rscript -e "install.packages('rsconnect')"
 Rscript -e "rsconnect::writeManifest()"
 echo "manifest.json updated"
 git push
