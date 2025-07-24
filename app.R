@@ -16,6 +16,19 @@ municipal_policy_app <- function() {
     ),
     absolutePanel(
       top = "1rem",
+      right = "1rem",
+      width = "100px",
+      style = "z-index: 10;",
+      a(
+        img(
+          src = "main-logo-no-text.png",
+          style = "width: 100%; height: auto;"
+        ),
+        href = "https://www.cmb-bmc.ca/"
+      )
+    ),
+    absolutePanel(
+      top = "1rem",
       left = "50%",
       width = "600px",
       style = "transform: translateX(-50%); z-index: 10;",
@@ -46,18 +59,6 @@ municipal_policy_app <- function() {
       )
     ),
     absolutePanel(
-      top = "1rem",
-      left = "1rem",
-      width = "300px",
-      style = "z-index: 10;",
-      card(
-        a(
-          img(
-            src = "https://www.cmb-bmc.ca/wp-content/uploads/2024/09/logo-bmc-cmb.svg", # nolint
-            style = "width: 100%; height: auto;"
-          ),
-          href = "https://www.cmb-bmc.ca/"
-        )
       )
     )
   )
