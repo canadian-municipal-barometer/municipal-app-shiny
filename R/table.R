@@ -21,19 +21,23 @@ table_server <- function(id, selected_issue) {
         "Name",
         "Province",
         "agree",
+        "opinion",
         "Population",
-        "Pct. Renters",
-        "Average Age",
-        "Median After-tax income"
+        "Pop. / sq. km",
+        "Pct. renters",
+        "Average age",
+        "Median after-tax income"
       )]
       colnames(df) <- c(
         "Municipality",
         "Province",
-        "Agreement",
+        "Pct. agreement",
+        "Pct. have an opinion",
         "Population",
+        "Pop. / sq. km",
         "% Renters",
-        "Avg. Age",
-        "Median After-tax Income"
+        "Avg. age",
+        "Median after-tax income"
       )
       return(df)
     })
@@ -52,26 +56,36 @@ table_server <- function(id, selected_issue) {
         ),
         filter = "top"
       ) |>
-        formatRound(c('Agreement'), 1) |>
+        formatRound(c("Pct. agreement"), 1) |>
         formatStyle(
-          'Agreement',
+          "Pct. agreement",
           background = styleColorBar(
             range(muni_data$agree),
-            'lightblue'
+            "lightblue"
           ),
-          backgroundSize = '100% 90%',
-          backgroundRepeat = 'no-repeat',
-          backgroundPosition = 'center'
+          backgroundSize = "100% 90%",
+          backgroundRepeat = "no-repeat",
+          backgroundPosition = "center"
+        ) |>
+        formatStyle(
+          "Pct. have an opinion",
+          background = styleColorBar(
+            range(muni_data$opinion),
+            "lightblue"
+          ),
+          backgroundSize = "100% 90%",
+          backgroundRepeat = "no-repeat",
+          backgroundPosition = "center"
         ) |>
         formatStyle(
           columns = c(
             "Population",
             "Province",
             "% Renters",
-            "Avg. Age",
-            "Median After-tax Income"
+            "Avg. age",
+            "Median after-tax income"
           ),
-          textAlign = 'right'
+          textAlign = "right"
         )
     })
   })
