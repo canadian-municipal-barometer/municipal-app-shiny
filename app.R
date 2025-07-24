@@ -10,23 +10,6 @@ issues <- jsonlite::fromJSON("data/statements_en.json")
 municipal_policy_app <- function() {
   ui <- page_fillable(
     padding = 0,
-    # includeCSS("www/style.css"),
-    # div(
-    #   id = "header",
-    #   style = "
-    #     display: flex;
-    #     align-items: center;
-    #     justify-content: space-around;
-    #     height: 150px;
-    #   ",
-    #   titlePanel("Municipal-level Policy Agreement"),
-    #   a(
-    #     img(
-    #       src = "https://www.cmb-bmc.ca/wp-content/uploads/2024/09/logo-bmc-cmb.svg" # nolint
-    #     ),
-    #     href = "https://www.cmb-bmc.ca/"
-    #   ),
-    # ),
     div(
       style = "height: 100vh;",
       map_ui("map")["map"]
@@ -36,13 +19,30 @@ municipal_policy_app <- function() {
       left = "50%",
       width = "600px",
       style = "transform: translateX(-50%); z-index: 10;",
-      card(
-        selectInput(
-          "selected_issue",
-          label = "Select an issue:",
-          choices = issues,
-          width = "100%"
-        )
+      div(
+        style = "
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        ",
+        p(
+          style = "
+            position: relative;
+            bottom: -37px;
+            width: fit-content;
+            border-radius: 7px;
+            padding: 5px 10px;
+            text-align: center;
+            background-color: white;
+          ",
+          "Select an issue:"
+        ),
+      ),
+      selectInput(
+        "selected_issue",
+        label = "",
+        choices = issues,
+        width = "100%"
       )
     ),
     absolutePanel(
@@ -60,43 +60,6 @@ municipal_policy_app <- function() {
         )
       )
     )
-    #   ),
-    #   nav_panel(
-    #     "Details",
-    #     navset_pill_list(
-    #       nav_panel(
-    #         "National Comparison",
-    #         div(
-    #           style = "display: flex; align-items: center; gap: 10px;",
-    #           "Municipality name:",
-    #           div(
-    #             style = "flex-grow: 1;",
-    #             details_ui("details")["muni_menu"]
-    #           )
-    #         ),
-    #         natl_comp_ui("natl_comp")["plot"]
-    #       ),
-    #       nav_panel(
-    #         "Correlations",
-    #         details_ui("details")["corr_menu"],
-    #         details_ui("details")["corr_plot"]
-    #       ),
-    #       nav_panel(
-    #         "Polarization",
-    #         details_ui("details")["histogram"],
-    #       ),
-    #     ),
-    #   ),
-    #   nav_panel(
-    #     "Municipalities",
-    #     table_ui("table")
-    #   ),
-    #   nav_panel(
-    #     "Issues",
-    #     issues_ui("issues")["header"],
-    #     issues_ui("issues")["table"]
-    #   )
-    # ),
   )
   server <- function(input, output, session) {
     map_server(
