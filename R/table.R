@@ -46,10 +46,13 @@ table_server <- function(id, selected_issue) {
       datatable(
         rownames = FALSE,
         filtered_data(),
+        width = '100%',
         options = list(
           dom = 'rt',
           paging = FALSE,
           lengthChange = FALSE,
+          scrollY = "calc(100vh - 450px)",
+          scrollCollapse = TRUE,
           columnDefs = list(
             list(targets = c(1, 2, 3, 4, 5, 6), className = "dt-right")
           )

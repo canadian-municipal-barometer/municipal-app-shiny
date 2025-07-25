@@ -25,8 +25,12 @@ elements <- tagList(
     style = "height: 100vh;",
     map_ui("map")["map"]
   ),
+  "table" = div(
+    style = "padding-top: 250px;",
+    table_ui("table")
+  ),
   "issue-menu" = absolutePanel(
-    top = "1rem",
+    top = "0rem",
     left = "50%",
     width = "600px",
     style = "transform: translateX(-50%); z-index: 10;",
@@ -38,13 +42,13 @@ elements <- tagList(
         ",
       p(
         style = "
-            position: relative;
-            bottom: -37px;
-            width: fit-content;
-            border-radius: 7px;
-            padding: 5px 10px;
-            text-align: center;
-            background-color: white;
+          position: relative;
+          bottom: -37px;
+          width: fit-content;
+          border-radius: 7px;
+          padding: 5px 10px;
+          text-align: center;
+          background-color: white;
           ",
         "Select an issue:"
       ),
@@ -62,17 +66,67 @@ elements <- tagList(
     card(
       gradientUI("grad")
     )
+  ),
+  "ui-toggle-container" = absolutePanel(
+    bottom = "1rem",
+    left = "50%",
+    style = "transform: translateX(-50%); z-index: 10;",
+    div(
+      style = "
+        display: flex;
+        background-color: white;
+      ",
+      actionButton("map_btn", "Map", icon = icon("map")),
+      actionButton("tbl_btn", "Table", icon = icon("table"))
+    ),
   )
 )
 
 ui <- page_fillable(
   padding = 0,
-  elements["map"],
-  elements["logo"],
-  elements["issue-menu"],
-  elements["legend"]
+  uiOutput("main_content")
 )
+
 server <- function(input, output, session) {
+  output$main_content <- renderUI({
+    if (curr_view() == "table") {
+      return(
+        tagList(
+          elements["table"],
+          elements["logo"],
+          elements["issue-menu"],
+          elements["ui-toggle-container"]
+        )
+      )
+    }
+    if (curr_view() == "map") {
+      return(
+        tagList(
+          elements["map"],
+          elements["logo"],
+          elements["issue-menu"],
+          elements["legend"],
+          elements["ui-toggle-container"]
+        )
+      )
+    }
+  })
+
+  # reactive to track if it is the table or the map being displayed
+  curr_view <- reactiveVal("map")
+
+  observeEvent(input$map_btn, {
+    if (curr_view() == "table") {
+      curr_view("map")
+    }
+  })
+
+  observeEvent(input$tbl_btn, {
+    if (curr_view() == "map") {
+      curr_view("table")
+    }
+  })
+
   map_server(
     "map",
     selected_issue = reactive({
