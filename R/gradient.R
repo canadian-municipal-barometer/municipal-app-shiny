@@ -9,10 +9,16 @@ gradientUI <- function(id) {
         tags$link(rel = "stylesheet", type = "text/css", href = "gradient.css")
       ),
       div(
-        id = "grad-container",
-        div(class = "gradient"),
+        id = "legend-container",
+        p("Legend"),
+        div(
+          id = "gradient-container",
+          div(id = "colors-na"),
+          div(id = "colors-gradient"),
+        ),
         div(
           class = "labels",
+          span("NA"),
           span("0.00"),
           span("0.25"),
           span("0.50"),
