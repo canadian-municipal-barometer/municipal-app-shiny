@@ -59,6 +59,10 @@ municipal_policy_app <- function() {
       )
     ),
     absolutePanel(
+      bottom = "1rem",
+      left = "1rem",
+      card(
+        gradientUI("grad")
       )
     )
   )
@@ -89,6 +93,7 @@ municipal_policy_app <- function() {
       }),
       selected_muni = selected_muni
     )
+    gradientServer("grad")
   }
   shinyApp(ui, server) # nolint
   # profvis::profvis(runApp(shinyApp(ui, server))) #nolint
