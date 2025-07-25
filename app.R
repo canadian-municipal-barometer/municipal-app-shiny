@@ -7,13 +7,8 @@ library(DT)
 
 issues <- jsonlite::fromJSON("data/statements_en.json")
 
-ui <- page_fillable(
-  padding = 0,
-  div(
-    style = "height: 100vh;",
-    map_ui("map")["map"]
-  ),
-  absolutePanel(
+elements <- tagList(
+  "logo" = absolutePanel(
     top = "1rem",
     right = "1rem",
     width = "100px",
@@ -26,7 +21,11 @@ ui <- page_fillable(
       href = "https://www.cmb-bmc.ca/"
     )
   ),
-  absolutePanel(
+  "map" = div(
+    style = "height: 100vh;",
+    map_ui("map")["map"]
+  ),
+  "issue-menu" = absolutePanel(
     top = "1rem",
     left = "50%",
     width = "600px",
@@ -57,13 +56,21 @@ ui <- page_fillable(
       width = "100%"
     )
   ),
-  absolutePanel(
+  "legend" = absolutePanel(
     bottom = "1rem",
     left = "1rem",
     card(
       gradientUI("grad")
     )
   )
+)
+
+ui <- page_fillable(
+  padding = 0,
+  elements["map"],
+  elements["logo"],
+  elements["issue-menu"],
+  elements["legend"]
 )
 server <- function(input, output, session) {
   map_server(
