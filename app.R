@@ -4,6 +4,7 @@
 library(shiny)
 library(bslib)
 library(DT)
+library(rintrojs)
 
 issues <- jsonlite::fromJSON("data/statements_en.json")
 
@@ -35,10 +36,14 @@ elements <- tagList(
     width = "25vw",
     height = "40vh",
     style = "z-index: 10;",
-    card(
-      title = "Comparison to the National average",
-      natl_comp_ui("natl-plot")["muni_menu"],
-      natl_comp_ui("natl-plot")["plot"]
+    introBox(
+      card(
+        title = "Comparison to the National average",
+        natl_comp_ui("natl-plot")["muni_menu"],
+        natl_comp_ui("natl-plot")["plot"]
+      ),
+      data.step = 2,
+      data.intro = "Select a municipality to compare it to the national average for the selected issue."
     )
   ),
   "issue-menu" = absolutePanel(
@@ -46,14 +51,16 @@ elements <- tagList(
     left = "50%",
     width = "600px",
     style = "transform: translateX(-50%); z-index: 10;",
-    div(
-      style = "
+    introBox(
+      tagList(
+        div(
+          style = "
           display: flex;
           flex-direction: column;
           align-items: start;
         ",
-      p(
-        style = "
+          p(
+            style = "
           position: relative;
           bottom: -37px;
           width: fit-content;
@@ -62,40 +69,61 @@ elements <- tagList(
           text-align: center;
           background-color: white;
           ",
-        "Select an issue:"
+            "Select an issue:"
+          ),
+        ),
+        selectInput(
+          "selected_issue",
+          label = "",
+          choices = issues,
+          width = "100%"
+        )
       ),
-    ),
-    selectInput(
-      "selected_issue",
-      label = "",
-      choices = issues,
-      width = "100%"
+      data.step = 1,
+      data.intro = "Select an issue to visualize agreement in municipalities across the country."
     )
   ),
   "legend" = absolutePanel(
-    bottom = "1rem",
+    bottom = "0px",
     left = "1rem",
-    card(
-      gradientUI("grad")
+    introBox(
+      card(
+        gradientUI("grad")
+      ),
+      data.step = 4,
+      data.intro = "The color indicates the average response, from negative (red) to positive (blue)."
     )
   ),
   "ui-toggle-container" = absolutePanel(
-    bottom = "1rem",
+    bottom = "28px",
     left = "50%",
     style = "transform: translateX(-50%); z-index: 10;",
-    div(
-      style = "
+    introBox(
+      div(
+        style = "
         display: flex;
         background-color: white;
       ",
-      actionButton("map_btn", "Map", icon = icon("map")),
-      actionButton("tbl_btn", "Table", icon = icon("table"))
-    ),
+        actionButton("map_btn", "Map", icon = icon("map")),
+        actionButton("tbl_btn", "Table", icon = icon("table")),
+      ),
+      data.step = 5,
+      data.intro = "Use these buttons to switch between the map and table views. The tour will adjust to what is visible."
+    )
+  ),
+  "tour-btn" = absolutePanel(
+    bottom = "28px",
+    right = "50px",
+    style = "
+      background-color: white;
+      ",
+    actionButton("tour_btn", "Help", icon = icon("info-circle")),
   )
 )
 
 ui <- page_fillable(
   padding = 0,
+  introjsUI(),
   uiOutput("main_content")
 )
 
@@ -119,7 +147,8 @@ server <- function(input, output, session) {
           elements["natl-plot"],
           elements["issue-menu"],
           elements["legend"],
-          elements["ui-toggle-container"]
+          elements["ui-toggle-container"],
+          elements["tour-btn"]
         )
       )
     }
@@ -138,6 +167,10 @@ server <- function(input, output, session) {
     if (curr_view() == "map") {
       curr_view("table")
     }
+  })
+
+  observeEvent(input$tour_btn, {
+    introjs(session)
   })
 
   map_server(
@@ -163,5 +196,13 @@ server <- function(input, output, session) {
     })
   )
   gradientServer("grad")
+
+  # run the tour when the client has finished initial rendering
+  session$onFlushed(
+    function() {
+      introjs(session)
+    },
+    once = TRUE
+  )
 }
 shinyApp(ui, server) # nolint
