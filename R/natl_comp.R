@@ -61,8 +61,8 @@ natl_comp_server <- function(id, selected_issue, selected_muni) {
         scale_y_continuous(expand = c(0, 0), limits = c(0, 100)) +
         theme_minimal(base_size = 16) +
         theme(
-          axis.line.x = element_line(color = "black", size = 0.5),
-          axis.line.y = element_line(color = "black", size = 0.5),
+          axis.line.x = element_line(color = "black", linewidth = 0.5),
+          axis.line.y = element_line(color = "black", linewidth = 0.5),
           legend.position = "bottom",
           legend.title = element_blank(),
           axis.ticks.x = element_blank(),
