@@ -10,7 +10,7 @@ issues <- jsonlite::fromJSON("data/statements_en.json")
 elements <- tagList(
   "logo" = absolutePanel(
     top = "1rem",
-    right = "1rem",
+    left = "1rem",
     width = "100px",
     style = "z-index: 10;",
     a(
@@ -26,8 +26,20 @@ elements <- tagList(
     map_ui("map")["map"]
   ),
   "table" = div(
-    style = "padding-top: 250px;",
+    style = "padding-top: 200px;",
     table_ui("table")
+  ),
+  "natl-plot" = absolutePanel(
+    top = "2rem",
+    right = "1rem",
+    width = "25vw",
+    height = "40vh",
+    style = "z-index: 10;",
+    card(
+      title = "Comparison to the National average",
+      natl_comp_ui("natl-plot")["muni_menu"],
+      natl_comp_ui("natl-plot")["plot"]
+    )
   ),
   "issue-menu" = absolutePanel(
     top = "0rem",
@@ -38,7 +50,7 @@ elements <- tagList(
       style = "
           display: flex;
           flex-direction: column;
-          align-items: center;
+          align-items: start;
         ",
       p(
         style = "
@@ -104,6 +116,7 @@ server <- function(input, output, session) {
         tagList(
           elements["map"],
           elements["logo"],
+          elements["natl-plot"],
           elements["issue-menu"],
           elements["legend"],
           elements["ui-toggle-container"]
@@ -140,18 +153,14 @@ server <- function(input, output, session) {
       input$selected_issue
     })
   )
-  selected_muni <- details_server(
-    "details",
-    selected_issue = reactive({
-      input$selected_issue
-    })
-  )
   natl_comp_server(
-    "natl_comp",
+    "natl-plot",
     selected_issue = reactive({
       input$selected_issue
     }),
-    selected_muni = selected_muni
+    selected_muni = reactive({
+      input$muni_menu
+    })
   )
   gradientServer("grad")
 }

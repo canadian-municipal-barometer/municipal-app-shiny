@@ -7,7 +7,6 @@ library(DBI)
 library(duckdb)
 library(readr)
 
-muni_list <- readRDS("data/muni-list.RDS")
 muni_data <- read_csv("data/municipal-data_raw.csv")
 
 details_ui <- function(id) {

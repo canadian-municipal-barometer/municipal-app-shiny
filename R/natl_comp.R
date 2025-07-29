@@ -2,9 +2,21 @@ library(shiny)
 library(duckdb)
 library(DBI)
 
+muni_list <- readRDS("data/muni-list.RDS")
+
+muni_list_selected <- sample(muni_list, 1)
+
 natl_comp_ui <- function(id) {
   tagList(
-    "plot" = plotOutput(NS(id, "plot"))
+    "plot" = plotOutput(NS(id, "plot")),
+    "muni_menu" = selectInput(
+      inputId = "muni_menu",
+      label = "Select a municipality:",
+      choices = muni_list,
+      selectize = TRUE,
+      selected = muni_list_selected,
+      width = "100%",
+    )
   )
 }
 
@@ -42,14 +54,16 @@ natl_comp_server <- function(id, selected_issue, selected_muni) {
           vjust = -0.5,
           size = 5
         ) +
-        labs(title = "Pct. Agreement and Pct. Have an opinion") +
         ylab("Pct.") +
         scale_fill_manual(
           values = c("Municipality" = "#0091AC", "National" = "#6C6E74")
         ) +
+        scale_y_continuous(expand = c(0, 0), limits = c(0, 100)) +
         theme_minimal(base_size = 16) +
         theme(
-          legend.position = "right",
+          axis.line.x = element_line(color = "black", size = 0.5),
+          axis.line.y = element_line(color = "black", size = 0.5),
+          legend.position = "bottom",
           legend.title = element_blank(),
           axis.ticks.x = element_blank(),
           axis.title.x = element_blank(),
