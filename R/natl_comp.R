@@ -49,9 +49,12 @@ natl_comp_server <- function(id, selected_issue, selected_muni) {
           position = "dodge"
         ) +
         geom_text(
-          aes(label = paste0(round(pred, 2), "%")),
+          aes(
+            label = paste0(round(pred, 2), "%"),
+            # change the y position so that the labels are in the centre of the bars #nolint
+            y = pred / 2
+          ),
           position = position_dodge(width = 0.9),
-          vjust = -0.5,
           size = 5
         ) +
         ylab("Pct.") +
