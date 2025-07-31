@@ -80,7 +80,7 @@ elements <- tagList(
         )
       ),
       data.step = 1,
-      data.intro = "Select an issue to visualize agreement in municipalities across the country."
+      data.intro = "Select an issue to visualize average agreement to it in municipalities across the country."
     )
   ),
   "legend" = absolutePanel(
@@ -91,7 +91,7 @@ elements <- tagList(
         gradientUI("grad")
       ),
       data.step = 4,
-      data.intro = "The color indicates the average response, from negative (red) to positive (blue)."
+      data.intro = "The color indicates the average response, from negative (orange) to positive (blue). Municipalities without data are gray." #nolint
     )
   ),
   "ui-toggle-container" = absolutePanel(
@@ -108,7 +108,7 @@ elements <- tagList(
         actionButton("tbl_btn", "Table", icon = icon("table")),
       ),
       data.step = 5,
-      data.intro = "Use these buttons to switch between the map and table views. The tour will adjust to what is visible."
+      data.intro = "Use these buttons to switch between the map and table views. The table view provides additional demographic details." #nolint
     )
   ),
   "tour-btn" = absolutePanel(
