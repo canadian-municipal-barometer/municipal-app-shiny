@@ -41,6 +41,8 @@ git push origin prod --force
 echo "Returning to main branch..."
 git checkout main
 Rscript -e "renv::restore()"
+# restore dev R language server
+Rscript -e "install.packages('languageserver')"
 
 echo "Deployment to prod branch complete."
 echo "You are back on the main branch."
