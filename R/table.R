@@ -60,6 +60,7 @@ table_server <- function(id, selected_issue) {
         filter = "top"
       ) |>
         formatRound(c("Pct. agreement"), 1) |>
+        formatCurrency("Median after-tax income") |>
         formatStyle(
           "Pct. agreement",
           background = styleColorBar(
